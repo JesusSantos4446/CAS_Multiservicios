@@ -102,3 +102,57 @@ async function signUp(event) {
         }, 5000);
     }
 }
+
+document.addEventListener('DOMContentLoaded', async () => {
+const token = localStorage.getItem('fullName');
+const clientNameElement = document.getElementById('UserName');
+clientNameElement.textContent = `Hola, ${token}`
+})
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // Inicializa contadores para cada estado en 0
+        let inProgressCount = 0;
+        let pendingCount = 0;
+        let notApprovedCount = 0;
+        let approvedCount = 0;
+
+        // Realiza la solicitud para obtener las cotizaciones
+        const quotesResponse = await fetch(allQuotes_route);
+        const quotes = await quotesResponse.json();
+
+        // Recorre las cotizaciones y cuenta cada estado
+        quotes.forEach(quote => {
+            switch (quote.Status) {
+                case 1:
+                    inProgressCount++;
+                    break;
+                case 2:
+                    pendingCount++;
+                    break;
+                case 3:
+                    notApprovedCount++;
+                    break;
+                case 4:
+                    approvedCount++;
+                    break;
+                default:
+                    console.warn("Estado desconocido:", quote.Status);
+            }
+        });
+
+        // Actualiza el contenido de los elementos HTML con los contadores, mostrando 0 si no hay datos
+        document.getElementById("inprogress").textContent = inProgressCount;
+        document.getElementById("pending").textContent = pendingCount;
+        document.getElementById("not-approved").textContent = notApprovedCount;
+        document.getElementById("approved").textContent = approvedCount;
+    } catch (error) {
+        console.error("Error al cargar y contar cotizaciones:", error);
+
+        // Si hay un error en la solicitud, asegúrate de mostrar 0 en cada elemento
+        document.getElementById("inprogress").textContent = 0;
+        document.getElementById("pending").textContent = 0;
+        document.getElementById("not-approved").textContent = 0;
+        document.getElementById("approved").textContent = 0;
+    }
+});

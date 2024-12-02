@@ -23,6 +23,11 @@
       defer
     ></script>
     <script src="../public/js/init-alpine.js"></script>
+    <script src="../Controllers/routes.js"></script>
+    <script src="../Controllers/quote.js"></script>
+    <script src="../Controllers/show/showClientName.js"></script>
+    <script src="../Controllers/show/showQuote.js"></script>
+    <script src="../Controllers/show/showQuoteName.js"></script>
   </head>
   <body>
     <div
@@ -283,7 +288,7 @@
           >
             <!-- Imagen para tema claro -->
             <img
-              src="../public/img/CAS_MULTISERVICIOS_LOGO_v1.0-LIGHT.png"
+              src="/www/public/img/CAS_MULTISERVICIOS_LOGO_v1.0-LIGHT.png"
               alt="Logo CAS Multiservicios"
               width="120"
               height="25"
@@ -292,7 +297,7 @@
             
             <!-- Imagen para tema oscuro -->
             <img
-              src="../public/img/CAS_MULTISERVICIOS_LOGO_v1.0-DARK.png"
+              src="/www/public/img/CAS_MULTISERVICIOS_LOGO_v1.0-DARK.png"
               alt="Logo CAS Multiservicios Oscuro"
               width="120"
               height="25"
@@ -519,12 +524,11 @@
                 ></path>
               </svg>
             </button>
-            <!-- Se agrega el botón de atras -->
+            <!-- Search input -->
             <div class="flex justify-center flex-1 lg:mr-32">
               <div
                 class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
               >
-                
               </div>
             </div>
             <ul class="flex items-center flex-shrink-0 space-x-6">
@@ -572,12 +576,12 @@
                   aria-label="Account"
                   aria-haspopup="true"
                 >
-                  <img
-                    class="object-cover w-8 h-8 rounded-full"
-                    src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-                    alt=""
-                    aria-hidden="true"
-                  />
+                <img
+                class="object-cover w-8 h-8 rounded-full"
+                src="../public/img/user.jpg"
+                alt=""
+                aria-hidden="true"
+              />
                 </button>
                 <template x-if="isProfileMenuOpen">
                   <ul
@@ -589,28 +593,6 @@
                     class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
                     aria-label="submenu"
                   >
-                  <li class="flex">
-                    <a
-                      class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                      href="../Views/profile.html"
-                    >
-                      <svg
-                        class="w-4 h-4 mr-3"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        ></path>
-                      </svg>
-                      <span>Perfil</span>
-                    </a>
-                  </li>
                     <li class="flex">
                       <a
                         class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
@@ -641,12 +623,13 @@
         </header>
         <main class="h-full pb-16 overflow-y-auto">
           <div class="container px-6 mx-auto grid">
-            <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-              Cotización para: BBB Industries
+            <h2 id="cotClientId" class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+              Cotización para: 
             </h2>
         
             <h4
             class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
+            id="cotName"
           >
             Cotización No: COT 0000-CMS0924
           </h4>
@@ -654,94 +637,39 @@
             <div class="relative overflow-x-auto">
               <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" class="px-6 py-3 rounded-s-lg">#</th>
-                    <th scope="col" class="px-6 py-3 rounded-s-lg">No. Articulo</th>
-                    <th scope="col" class="px-6 py-3 rounded-s-lg">Nombre del producto/servicio</th>
-                    <th scope="col" class="px-6 py-3 rounded-s-lg">Cantidad</th>
-                    <th scope="col" class="px-6 py-3">Precio unitario (excl. IVA)</th>
-                    <th scope="col" class="px-6 py-3 rounded-e-lg">Subtotal (excl. IVA)</th>
-                  </tr>
+                    <tr>
+                        <th scope="col" class="px-6 py-3 rounded-s-lg">#</th>
+                        <th scope="col" class="px-6 py-3">No. producto/servicio</th>
+                        <th scope="col" class="px-6 py-3">Nombre del producto/servicio</th>
+                        <th scope="col" class="px-6 py-3">Cantidad</th>
+                        <th scope="col" class="px-6 py-3">Precio unitario (excl. IVA)</th>
+                        <th scope="col" class="px-6 py-3 rounded-e-lg">Subtotal (excl. IVA)</th>
+                    </tr>
                 </thead>
                 <tbody>
-                  <tr class="bg-white dark:bg-gray-800">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">1.2</th>
-                    <td class="px-6 py-4">A10F37</td>
-                    <td class="px-6 py-4">Microsoft Surface Pro</td>
-                    <td class="px-6 py-4">1</td>
-                    <td class="px-6 py-4">$1999</td>
-                    <td class="px-6 py-4">$1999</td>
-                  </tr>
-                  <tr class="bg-white dark:bg-gray-800">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">1.1</th>
-                    <td class="px-6 py-4">A9F36</td>
-                    <td class="px-6 py-4">Apple MacBook Pro 17"</td>
-                    <td class="px-6 py-4">1</td>
-                    <td class="px-6 py-4">$2999</td>
-                    <td class="px-6 py-4">$2999</td>
-                  </tr>
+                    <!-- Las filas de los datos se llenarán dinámicamente con JavaScript -->
                 </tbody>
                 <tfoot>
-                  <tr class="font-semibold text-gray-900 dark:text-white">
-                    <th scope="row" class="px-6 py-3 text-base"></th>
-                    <td class="px-6 py-3"></td>
-                    <td class="px-6 py-3"></td>
-                    <td class="px-6 py-3"></td>
-                    <th scope="row" class="px-6 py-3 text-base">Total de productos (excl. IVA)</th>
-                    <td class="px-6 py-3">$21,000</td>
-                  </tr>
-                  <tr class="font-semibold text-gray-900 dark:text-white">
-                    <th scope="row" class="px-6 py-3 text-base"></th>
-                    <td class="px-6 py-3"></td>
-                    <td class="px-6 py-3"></td>
-                    <td class="px-6 py-3"></td>
-                    <th scope="row" class="px-6 py-3 text-base">Costo de envío (excl. IVA)</th>
-                    <td class="px-6 py-3">$21,000</td>
-                  </tr>
-                  <tr class="font-semibold text-gray-900 dark:text-white">
-                    <th scope="row" class="px-6 py-3 text-base"></th>
-                    <td class="px-6 py-3"></td>
-                    <td class="px-6 py-3"></td>
-                    <td class="px-6 py-3"></td>
-                    <th scope="row" class="px-6 py-3 text-base">Subtotal (excl. IVA)</th>
-                    <td class="px-6 py-3">$21,000</td>
-                  </tr>
-                  <tr class="font-semibold text-gray-900 dark:text-white">
-                    <th scope="row" class="px-6 py-3 text-base"></th>
-                    <td class="px-6 py-3"></td>
-                    <td class="px-6 py-3"></td>
-                    <td class="px-6 py-3"></td>
-                    <th scope="row" class="px-6 py-3 text-base">+16% IVA</th>
-                    <td class="px-6 py-3">$21,000</td>
-                  </tr>
-                  <tr class="font-semibold text-gray-900 dark:text-white">
-                    <th scope="row" class="px-6 py-3 text-base"></th>
-                    <td class="px-6 py-3"></td>
-                    <td class="px-6 py-3"></td>
-                    <td class="px-6 py-3"></td>
-                    <th scope="row" class="px-6 py-3 text-base">Precio Total (incl. IVA)</th>
-                    <td class="px-6 py-3">$21,000</td>
-                  </tr>
+                    <!-- Las filas de los totales se llenarán dinámicamente con JavaScript -->
                 </tfoot>
-              </table>
+            </table>
+            
             </div>
-            
-            
             <div data-dial-init class="fixed end-6 bottom-6 group">
               <div id="speed-dial-menu-default" class="flex flex-col items-center hidden mb-4 space-y-2">
-                
+                  <!-- Botón Compartir -->
                   <button id="share-button" type="button" data-tooltip-target="tooltip-share" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
                       <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                           <path d="M14.419 10.581a3.564 3.564 0 0 0-2.574 1.1l-4.756-2.49a3.54 3.54 0 0 0 .072-.71 3.55 3.55 0 0 0-.043-.428L11.67 6.1a3.56 3.56 0 1 0-.831-2.265c.006.143.02.286.043.428L6.33 6.218a3.573 3.573 0 1 0-.175 4.743l4.756 2.491a3.58 3.58 0 1 0 3.508-2.871Z"/>
                       </svg>
                       <span class="sr-only">Compartir</span>
                   </button>
-                  
                   <div id="tooltip-share" role="tooltip" class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                       Compartir
                       <div class="tooltip-arrow" data-popper-arrow></div>
                   </div>
-
+          
+                  <!-- Botón Imprimir -->
                   <button id="print-button" type="button" data-tooltip-target="tooltip-print" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
                       <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M5 20h10a1 1 0 0 0 1-1v-5H4v5a1 1 0 0 0 1 1Z"/>
@@ -753,69 +681,111 @@
                       Imprimir
                       <div class="tooltip-arrow" data-popper-arrow></div>
                   </div>
+          
+                  <!-- Botón Descargar -->
                   <button id="download-button" type="button" data-tooltip-target="tooltip-download" data-tooltip-placement="left" class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400">
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
-                      <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
-                  </svg>
-                    <span class="sr-only">Descargar</span>
-                </button>
-                
-                <div id="tooltip-download" role="tooltip" class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    Descargar
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
+                      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
+                          <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
+                      </svg>
+                      <span class="sr-only">Descargar</span>
+                  </button>
+                  <div id="tooltip-download" role="tooltip" class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                      Descargar
+                      <div class="tooltip-arrow" data-popper-arrow></div>
+                  </div>
               </div>
-
+          
               <button type="button" data-dial-toggle="speed-dial-menu-default" aria-controls="speed-dial-menu-default" aria-expanded="false" class="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
-                <svg class="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                </svg>
-                <span class="sr-only">Menú de opciones adicionales</span>
-            </button>
+                  <svg class="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                  </svg>
+                  <span class="sr-only">Menú de opciones adicionales</span>
+              </button>
           </div>
+          
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+          
+          <iframe id="print-frame" style="display: none;"></iframe>
           
           <script>
-              const dialToggle = document.querySelector('[data-dial-toggle]');
-              const dialMenu = document.getElementById('speed-dial-menu-default');
-          
-              dialToggle.addEventListener('click', () => {
-                  const expanded = dialToggle.getAttribute('aria-expanded') === 'true' || false;
-                  dialToggle.setAttribute('aria-expanded', !expanded);
-                  dialMenu.classList.toggle('hidden');
-              });
-              const shareButton = document.getElementById('share-button');
-              shareButton.addEventListener('click', async () => {
-                  if (navigator.share) {
-                      try {
-                          await navigator.share({
-                              title: 'Mi sitio web',
-                              text: '¡Echa un vistazo a este sitio increíble!',
-                              url: window.location.href
-                          });
-                          console.log('Contenido compartido con éxito');
-                      } catch (error) {
-                          console.error('Error al compartir:', error);
-                      }
-                  } else {
-                      alert('La API de compartir no está disponible en este navegador.');
-                  }
-              });
-              const printButton = document.getElementById('print-button');
-              printButton.addEventListener('click', () => {
-                  window.print();
-              });
-              const downloadButton = document.getElementById('download-button');
-              downloadButton.addEventListener('click', () => {
-                  const link = document.createElement('a');
-                  link.href = 'ruta/del/archivo.ext'; 
-                  link.download = 'nombre-del-archivo.ext'; 
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-              });
+            const dialToggle = document.querySelector('[data-dial-toggle]');
+            const dialMenu = document.getElementById('speed-dial-menu-default');
+            const urlParams = new URLSearchParams(window.location.search);
+            const clientId = urlParams.get('clientId');
+            const quoteId = urlParams.get('quoteId');
+        
+            dialToggle.addEventListener('click', () => {
+                const expanded = dialToggle.getAttribute('aria-expanded') === 'true' || false;
+                dialToggle.setAttribute('aria-expanded', !expanded);
+                dialMenu.classList.toggle('hidden');
+            });
+        
+            const shareButton = document.getElementById('share-button');
+            shareButton.addEventListener('click', async () => {
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            title: 'Documento para compartir',
+                            text: 'Mira este documento importante.',
+                            url: window.location.href
+                        });
+                        console.log('Contenido compartido exitosamente');
+                    } catch (error) {
+                        console.error('Error al compartir:', error);
+                    }
+                } else {
+                    console.log('La API de compartir no es compatible con este navegador.');
+                }
+            });
+        
+            const printButton = document.getElementById('print-button');
+            printButton.addEventListener('click', () => {
+                const iframe = document.getElementById('print-frame');
+                iframe.src = `pdfFormat.html?clientId=${clientId}&quoteId=${quoteId}`;
+
+                iframe.onload = () => {
+                    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+                    // Verificar que el contenido del iframe esté completamente cargado
+                    const checkContentLoaded = setInterval(() => {
+                        if (iframeDocument.readyState === 'complete') {
+                            clearInterval(checkContentLoaded);
+                            
+                            console.log('Contenido cargado, esperando 2 segundos antes de imprimir');
+                            
+                            // Esperar 2 segundos antes de imprimir
+                            setTimeout(() => {
+                                try {
+                                    iframe.contentWindow.focus();
+                                    iframe.contentWindow.print();
+                                } catch (error) {
+                                    console.error('Error al intentar imprimir:', error);
+                                }
+                            }, 1000); // Espera de 2 segundos
+                        }
+                    }, 100);
+                };
+            });
+
+            const downloadButton = document.getElementById('download-button');
+downloadButton.addEventListener('click', () => {
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = `pdfFormat.html?clientId=${clientId}&quoteId=${quoteId}`;
+    document.body.appendChild(iframe);
+
+    iframe.onload = () => {
+        setTimeout(() => {
+            iframe.contentWindow.print();
+            document.body.removeChild(iframe); // Opcional: remueve el iframe después de imprimir
+        }, 2000); // Espera 2 segundos para cargar completamente el contenido
+    };
+});
+
+            
           </script>
-          </div>
+                  
         </main>
       </div>
     </div>

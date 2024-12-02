@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, please refer to the docs:
+            https://cordova.apache.org/docs/en/latest/
+        Some notes:
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+                <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        --->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <title>Iniciar sesión</title>
+        <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+      />
+      <link rel="stylesheet" href="public/css/tailwind.output.css" />
+      <style>
+        body {
+          user-select: none;
+        }
+        input, textarea {
+          user-select: text;
+        }
+      </style>
+      <script
+        src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+        defer
+      ></script>
+      <script src="public/js/init-alpine.js"></script>
+      <script src="Controllers/routes.js"></script>  
+      <script src="Controllers/user.js"></script>
+    </head>
+    <body>
+        <div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
+          <div
+            class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800"
+          >
+            <div class="flex flex-col overflow-y-auto md:flex-row">
+              <div class="h-32 md:h-auto md:w-1/2">
+                <img
+                  aria-hidden="true"
+                  class="object-cover w-full h-full dark:hidden"
+                  src="public/img/login-office.jpeg"
+                  alt="Office"
+                />
+                <img
+                  aria-hidden="true"
+                  class="hidden object-cover w-full h-full dark:block"
+                  src="public/img/login-office-dark.jpeg"
+                  alt="Office"
+                />
+              </div>
+              <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+                <div class="w-full">
+                  <h1
+                    class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200"
+                  >
+                    Iniciar sesión
+                  </h1>
+                  <!-- Contenedor para el mensaje de login incorrecto -->
+                  <div id="error-msg" class="hidden p-4 mb-4 text-sm text-white bg-red-500 rounded-lg"></div>
+                  <form onsubmit="signIn(event)">
+                    <label class="block text-sm">
+                      <span class="select-none text-gray-700 dark:text-gray-400">Correo electronico</span>
+                      <input required id="email" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="" type="email" autocomplete="username">
+                    </label>
+                    <label class="block mt-4 text-sm">
+                      <span class="select-none text-gray-700 dark:text-gray-400">Contraseña</span>
+                      <input required id="password" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="" type="password" autocomplete="current-password"/>
+                    </label>
+                    <button onclick="window.location.href='Views/index.html'" type="submit" class="select-none block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                      Iniciar sesión
+                    </button>  
+                  </form>
+                  <hr class="my-8" />
+                  <p class="mt-1">
+                    <a
+                      class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
+                      href="Views/create-account.html"
+                    >
+                      Crear cuenta
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </body>
+</html>
